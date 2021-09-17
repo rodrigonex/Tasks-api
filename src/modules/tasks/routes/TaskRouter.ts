@@ -19,4 +19,23 @@ taskRouter.post(
 
 taskRouter.get('/', taskControler.index);
 
+taskRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+  }),
+  taskControler.show,
+);
+
+taskRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+  }),
+  taskControler.delete,
+);
 export default taskRouter;

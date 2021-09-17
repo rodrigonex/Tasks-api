@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import connectionDb from '@shared/mongodb/mogodb';
 import IUsers from '../interface/UserInterface';
-import StudentModel from '../model/userModel';
+import UserModel from '../model/userModel';
 import mongoose from 'mongoose';
 
 interface IRequest {
@@ -20,7 +20,7 @@ export default class UpdateService {
   }: IRequest): Promise<IUsers> {
     connectionDb();
 
-    const userExists = await StudentModel.findById(id);
+    const userExists = await UserModel.findById(id);
 
     if (!userExists) {
       throw new AppError('User not found.');
@@ -35,7 +35,7 @@ export default class UpdateService {
     };
     mongoose.set('returnOriginal', false);
 
-    const user = await StudentModel.findByIdAndUpdate(id, newUser);
+    const user = await UserModel.findByIdAndUpdate(id, newUser);
 
     return user;
   }

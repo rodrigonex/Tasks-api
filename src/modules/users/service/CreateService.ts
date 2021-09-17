@@ -1,7 +1,8 @@
 import AppError from '@shared/errors/AppError';
 import connectionDb from '@shared/mongodb/mogodb';
+import { hash } from 'bcrypt';
 import IUsers from '../interface/UserInterface';
-import StudentModel from '../model/userModel';
+import UserModel from '../model/userModel';
 
 interface IRequest {
   name: string;
@@ -16,13 +17,14 @@ export default class CreateService {
     password,
   }: IRequest): Promise<IUsers | undefined> {
     connectionDb();
-    const emailExist = await StudentModel.find({ email: email });
+    const emailExist = await UserModel.find({ email: email });
 
     if (emailExist == undefined) {
       throw new AppError('E-mail already registered');
     }
 
-    const user = new StudentModel({ name, email, password });
+    const hashedPassword = await hash(password, 8);
+    const user = new UserModel({ name, email, password: hashedPassword });
     await user.save();
     return user;
   }

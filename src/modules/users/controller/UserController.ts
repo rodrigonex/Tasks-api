@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import CreateService from '../service/CreateService';
 import DeleteService from '../service/DeleteService';
 import ListServise from '../service/ListService';
-import ShowService from '../service/showService';
+import ShowService from '../service/ShowService';
 import UpdateService from '../service/UpdateService';
 
 export default class UserController {
